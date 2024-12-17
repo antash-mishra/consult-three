@@ -506,9 +506,9 @@ const iconBackgroundMaterial = new THREE.MeshBasicMaterial({ color: "#19dcdb", t
 
 // Load icon textures (replace with your actual icon image paths)
 const iconLoader = new THREE.TextureLoader();
-const minimizeIcon = iconLoader.load('minimize-sign.png');
-const maximizeIcon = iconLoader.load('maximize.png');
-const closeIcon = iconLoader.load('close.png');
+const minimizeIcon = iconLoader.load('./minimize-sign.png');
+const maximizeIcon = iconLoader.load('./maximize.png');
+const closeIcon = iconLoader.load('./close.png');
 // Create materials for the icons
 const minimizeMaterial = new THREE.MeshBasicMaterial({ map: minimizeIcon, transparent: true });
 const maximizeMaterial = new THREE.MeshBasicMaterial({ map: maximizeIcon, transparent: true });
