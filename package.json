@@ -1,10 +1,11 @@
 {
   "name": "consulting_three_js",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build"
+    "dev": "vite",
+    "build": "vite build",
+    "deploy": "vercel --prod"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +13,14 @@
   "description": "",
   "dependencies": {
     "dat.gui": "^0.7.9",
+    "express": "^4.21.2",
     "gsap": "^3.12.5",
     "lil-gui": "^0.20.0",
     "three": "^0.171.0",
     "vite": "^6.0.3"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.9",
+    "nodemon": "^3.1.9"
   }
 }
