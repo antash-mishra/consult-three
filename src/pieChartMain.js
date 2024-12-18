@@ -16,7 +16,8 @@ const debugObject = {}
 const gltfLoader = new GLTFLoader()
 
 const canvas = document.querySelector('canvas.webgl')
-
+// const nav = document.querySelector('nav');
+//const navHeight = nav.offsetHeight;
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
@@ -80,30 +81,30 @@ function loadGLBModel(url, position, scale) {
         window.addEventListener('click', onMouseClick, false);
         function onMouseClick(event) {
             // Normalize mouse coordinates to range [-1, 1]
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            mouse.x = (event.clientX / sizes.width) * 2 - 1;
+            mouse.y = -(event.clientY / sizes.height) * 2 + 1;
               
             // Update the raycaster with the mouse coordinates
             raycaster.setFromCamera(mouse, camera);
               
             // Check for intersections with the icons
             const intersects = raycaster.intersectObjects(plane.children);
-          
+            console.log("Intersects: ", intersects)
             if (intersects.length > 0) {
               const clickedObject = intersects[0].object ;
               console.log(clickedObject)
           
               // Handle actions based on the clicked icon
-              if (clickedObject === minimizePlane ) {
+              if (clickedObject === minimizePlane || clickedObject === minimizeBackground ) {
                 console.log('Minimize clicked');
                 // Implement minimize logic (e.g., hide or reduce size of plane)
                 model.scale.set(0, 0, 0);
     
-              } else if (clickedObject === maximizePlane ) {
+              } else if (clickedObject === maximizePlane || clickedObject === maximizeBackground ) {
                 console.log('Maximize clicked');
                 // Implement maximize logic (e.g., restore plane to original size)
                 model.scale.set(5, 5, 5);
-              } else if (clickedObject === closePlane ) {
+              } else if (clickedObject === closePlane || clickedObject === closeBackground) {
                 console.log('Close clicked');
                 // Implement close logic (e.g., remove the plane from the scene)
                 scene.remove(model);
@@ -157,8 +158,8 @@ function createCurve(controlPoints, color, scene) {
     window.addEventListener('click', onMouseClick, false);
     function onMouseClick(event) {
         // Normalize mouse coordinates to range [-1, 1]
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        mouse.x = (event.clientX / sizes.width) * 2 - 1;
+        mouse.y = -(event.clientY / sizes.height) * 2 + 1;
           
         // Update the raycaster with the mouse coordinates
         raycaster.setFromCamera(mouse, camera);
@@ -171,16 +172,16 @@ function createCurve(controlPoints, color, scene) {
           console.log(clickedObject)
       
           // Handle actions based on the clicked icon
-          if (clickedObject === minimizePlane ) {
+          if (clickedObject === minimizePlane || clickedObject === minimizeBackground ) {
             console.log('Minimize clicked');
             // Implement minimize logic (e.g., hide or reduce size of plane)
             curveObject.scale.set(0, 0, 0);
 
-          } else if (clickedObject === maximizePlane ) {
+          } else if (clickedObject === maximizePlane || clickedObject === maximizeBackground) {
             console.log('Maximize clicked');
             // Implement maximize logic (e.g., restore plane to original size)
             curveObject.scale.set(1, 1, 1);
-          } else if (clickedObject === closePlane) {
+          } else if (clickedObject === closePlane || clickedObject === closeBackground) {
             console.log('Close clicked');
             // Implement close logic (e.g., remove the plane from the scene)
             scene.remove(curveObject);
@@ -374,16 +375,16 @@ function createRoundedRectangleWithText({
           const clickedObject = intersects[0].object;
       
           // Handle actions based on the clicked icon
-          if (clickedObject === minimizePlane) {
+          if (clickedObject === minimizeBackground || clickedObject === minimizePlane) {
             console.log('Minimize clicked');
             // Implement minimize logic (e.g., hide or reduce size of plane)
             roundedRectangle.scale.set(0, 0, 0);
 
-          } else if (clickedObject === maximizePlane) {
+          } else if (clickedObject === maximizeBackground || clickedObject === maximizePlane) {
             console.log('Maximize clicked');
             // Implement maximize logic (e.g., restore plane to original size)
             roundedRectangle.scale.set(1, 1, 1);
-          } else if (clickedObject === closePlane) {
+          } else if (clickedObject === closeBackground || clickedObject === closePlane) {
             console.log('Close clicked');
             // Implement close logic (e.g., remove the plane from the scene)
             scene.remove(roundedRectangle);
@@ -542,52 +543,6 @@ const closePlane = new THREE.Mesh(new THREE.PlaneGeometry(iconSize, iconSize), c
 closePlane.position.set(11, 0.1, 0.04); // Position close icon
 plane.add(closePlane);
 
-// Raycaster for detecting clicks on the icons
-
-
-
-  // Create a CurvePath for the reverse L-shape with a curve
-  const curvePath = new THREE.CurvePath();
-
-  // 1. Top horizontal line
-//   const line1 = new THREE.LineCurve3(
-//     new THREE.Vector3(17.5, 4.8, 0),  // Start point
-//     new THREE.Vector3(20, 4.5, 0)   // End point
-//   );
-
-  // 2. Curved corner (Bezier Curve)
-  const curve = new THREE.CubicBezierCurve3(
-    new THREE.Vector3(17.5, 4.8, 0),
-    new THREE.Vector3(19, 4.8, -2),   // Start of curve (corner)
-    new THREE.Vector3(21, 3.5, -0.2),   // Control point (determines curvature)
-    new THREE.Vector3(21, 1, -0.3)    // End of curve
-  );
-
-
-    // 2. Curved corner (Bezier Curve)
-    const curve2 = new THREE.CubicBezierCurve3(
-        new THREE.Vector3(21, 0.8, -0),
-        new THREE.Vector3(19, 0.8, -2),   // Start of curve (corner)
-        new THREE.Vector3(21, 3.5, -0.2),   // Control point (determines curvature)
-        new THREE.Vector3(21, 3.4, -0.2)    // End of curve
-      );
-  // Add all segments to the CurvePath
-
-//  curvePath.add(curve);
-
-  // Generate points from the curve path
-  const points = curvePath.getPoints(50); // 50 points for smoothness
-
-  // Create geometry from the points
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
-  // Line material
-  const material = new THREE.LineBasicMaterial({ color: 0x0000ff, linewidth: 3 });
-
-  // Create the line
-  const line = new THREE.Line(geometry, material);
-  scene.add(line);
-
   const bgGeometry = new THREE.PlaneGeometry(40, 30);
   const bgMaterial = new THREE.MeshBasicMaterial({
     color: "#26336B", // Set the background color (green in this case)
@@ -626,16 +581,16 @@ plane.add(closePlane);
         console.log(clickedObject)
     
         // Handle actions based on the clicked icon
-        if (clickedObject === minimizePlane ) {
+        if (clickedObject === minimizeBackground || clickedObject === minimizePlane ) {
           console.log('Minimize clicked');
           // Implement minimize logic (e.g., hide or reduce size of plane)
           bgPlane.scale.set(1,1,1)
-        } else if (clickedObject === maximizePlane ) {
+        } else if (clickedObject === maximizeBackground || clickedObject == maximizePlane) {
           console.log('Maximize clicked');
           // Implement maximize logic (e.g., restore plane to original size)
           
           bgPlane.scale.set(1., 1., 1.)
-        } else if (clickedObject === closePlane ) {
+        } else if (clickedObject === closeBackground || clickedObject == closePlane) {
           console.log('Close clicked');
           // Implement close logic (e.g., remove the plane from the scene)
           scene.remove(bgPlane);
@@ -648,12 +603,46 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(10, 10, 10);
 scene.add(ambientLight, directionalLight);
 
-
-
 const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height)
 camera.position.set(30.93563109244617, 2.581085025998235, 9.102246280191748);
 camera.lookAt(0, 0, 0);
 scene.add(camera)
+
+// Intersection Marker
+const intersectionSphere = new THREE.SphereGeometry(0.1, 16, 16);
+const intersectionMarker = new THREE.Mesh(intersectionSphere, new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+scene.add(intersectionMarker);
+
+// Track mouse movement
+window.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Update raycaster
+    raycaster.setFromCamera(mouse, camera);
+
+    // Check intersections
+    const intersects = raycaster.intersectObject(minimizeBackground);
+    console.log("Intersect Check: ", intersects)
+    if (intersects.length > 0) {
+        intersectionMarker.position.copy(intersects[0].point);
+    }
+
+    renderer.render(scene, camera);
+}
+
+
+const controls = new OrbitControls(camera, canvas)
+// // controls.enabled= false
+controls.enableDamping = true
+controls.enableZoom = false;  // Disable zoom
+controls.enablePan = false;   // Disable panning
+controls.enableRotate = false; // Disable rotation
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -674,6 +663,7 @@ const tick = ()  => {
     window.requestAnimationFrame(tick)
 
 
-}
 
+}
+// animate()
 tick()

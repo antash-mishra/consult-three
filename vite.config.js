@@ -12,7 +12,7 @@ export default {
       sourcemap: true, // Add sourcemap
       rollupOptions: {
         input: {
-          Chart1: 'src/main.html', // Entry point for index.html
+          Chart1: 'src/index.html', // Entry point for index.html
           Chart2: 'src/piechart.html'
         }
       }

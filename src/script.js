@@ -94,17 +94,17 @@ function loadGLBModel(url, position, scale) {
             const clickedObject = intersects[0].object;
         
             // Handle actions based on the clicked icon
-            if (clickedObject === minimizePlane) {
+            if (clickedObject === minimizePlane || clickedObject === minimizeBackground) {
               console.log('Minimize clicked');
               // Implement minimize logic (e.g., hide or reduce size of plane)
               model.scale.set(0, 0, 0);
 
-            } else if (clickedObject === maximizePlane) {
+            } else if (clickedObject === maximizePlane || clickedObject === maximizeBackground) {
               console.log('Maximize clicked');
               // Implement maximize logic (e.g., restore plane to original size)
               model.scale.set(5, 5, 5);
-            } else if (clickedObject === closePlane) {
-              console.log('Close clicked');
+            } else if (clickedObject === closePlane || clickedObject === closeBackground) {
+              console.log('Close clicked'); 
               // Implement close logic (e.g., remove the plane from the scene)
               scene.remove(model);
             }
@@ -156,16 +156,16 @@ function addCenterText(text, color, position) {
             console.log("Intersects: ", intersects[0].object)
         
             // Handle actions based on the clicked icon
-            if (clickedObject === minimizePlane) {
+            if (clickedObject === minimizePlane || clickedObject === minimizeBackground) {
               console.log('Minimize clicked');
               // Implement minimize logic (e.g., hide or reduce size of plane)
               textMesh.scale.set(0, 0, 0);
 
-            } else if (clickedObject === maximizePlane) {
+            } else if (clickedObject === maximizePlane || clickedObject === maximizeBackground) {
               console.log('Maximize clicked');
               // Implement maximize logic (e.g., restore plane to original size)
               textMesh.scale.set(1, 1, 1);
-            } else if (clickedObject === closePlane) {
+            } else if (clickedObject === closePlane || clickedObject === closeBackground) {
               console.log('Close clicked');
               // Implement close logic (e.g., remove the plane from the scene)
               scene.remove(textMesh);
@@ -227,16 +227,16 @@ function createCurve(controlPoints, color, scene) {
           const clickedObject = intersects[0].object;
       
           // Handle actions based on the clicked icon
-          if (clickedObject === minimizePlane) {
+          if (clickedObject === minimizePlane || clickedObject === minimizeBackground) {
             console.log('Minimize clicked');
             // Implement minimize logic (e.g., hide or reduce size of plane)
             curveObject.scale.set(0, 0, 0);
 
-          } else if (clickedObject === maximizePlane) {
+          } else if (clickedObject === maximizePlane || clickedObject === maximizeBackground) {
             console.log('Maximize clicked');
             // Implement maximize logic (e.g., restore plane to original size)
             curveObject.scale.set(1, 1, 1);
-          } else if (clickedObject === closePlane) {
+          } else if (clickedObject === closePlane || clickedObject === closeBackground) {
             console.log('Close clicked');
             // Implement close logic (e.g., remove the plane from the scene)
             scene.remove(curveObject);
@@ -436,18 +436,18 @@ function createRoundedRectangleWithText({
         if (intersects.length > 0) {
           const clickedObject = intersects[0].object;        
           // Handle actions based on the clicked icon
-          if (clickedObject === minimizePlane) {
+          if (clickedObject === minimizePlane || clickedObject === minimizeBackground) {
             console.log('Minimize clicked');
             // Implement minimize logic (e.g., hide or reduce size of plane)
             
             roundedRectangle.scale.set(0,0,0)
 
-          } else if (clickedObject === maximizePlane) {
+          } else if (clickedObject === maximizePlane || clickedObject === maximizeBackground) {
             console.log('Maximize clicked');
 
             roundedRectangle.scale.set(1,1,1)    
             
-        } else if (clickedObject === closePlane) {
+        } else if (clickedObject === closePlane || clickedObject === closeBackground) {
             console.log('Close clicked');
             // Implement close logic (e.g., remove the plane from the scene)
             scene.remove(roundedRectangle);
