@@ -608,35 +608,6 @@ camera.position.set(30.93563109244617, 2.581085025998235, 9.102246280191748);
 camera.lookAt(0, 0, 0);
 scene.add(camera)
 
-// Intersection Marker
-const intersectionSphere = new THREE.SphereGeometry(0.1, 16, 16);
-const intersectionMarker = new THREE.Mesh(intersectionSphere, new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-scene.add(intersectionMarker);
-
-// Track mouse movement
-window.addEventListener('mousemove', (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-});
-
-// Animation loop
-function animate() {
-    requestAnimationFrame(animate);
-
-    // Update raycaster
-    raycaster.setFromCamera(mouse, camera);
-
-    // Check intersections
-    const intersects = raycaster.intersectObject(minimizeBackground);
-    console.log("Intersect Check: ", intersects)
-    if (intersects.length > 0) {
-        intersectionMarker.position.copy(intersects[0].point);
-    }
-
-    renderer.render(scene, camera);
-}
-
-
 const controls = new OrbitControls(camera, canvas)
 // // controls.enabled= false
 controls.enableDamping = true
